@@ -1,0 +1,31 @@
+model:
+  name: lightonai/LightOnOCR-2-1B
+  dtype: auto # auto | bfloat16 | float16 | float32
+
+dataset:
+  name: naver-clova-ix/cord-v2
+  split: train
+  text_prompt: Extract all text from this image in natural reading order.
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - v_proj
+
+training:
+  output_dir: outputs/my-lightonocr
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 8
+  num_train_epochs: 3
+  learning_rate: 2.0e-4
+  logging_steps: 50
+  save_steps: 1000
+  save_total_limit: 2
+  report_to: none
+  bf16: true
+  fp16: false
+
+seed: 42
